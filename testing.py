@@ -11,11 +11,6 @@ def h(current):
             result += count
     return result
 
-
-
-
-
-
 class puzzleTestCase(unittest.TestCase):
     """determine if h function is working correctly"""
 

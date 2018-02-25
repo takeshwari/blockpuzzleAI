@@ -1,7 +1,7 @@
 from queue import PriorityQueue
 
 SIZE = 7
-## state contains board state and the g value
+## state contains board state and the state's g value
 class state:
     g=0
     board = []
@@ -14,8 +14,9 @@ class puzzle:
     closed = set()
 
     def _init_(self, board):
-        ##self.intial = frontier.
-        print("whatever")
+        intial = state(board, 0)
+        self.frontier.put(self.f(intial), intial)
+
     #heuristic function counts number of w have to move overband adds them together
     def h(self, current):
         result = 0
@@ -46,12 +47,25 @@ class puzzle:
                 newState = state(new, g + cost)
                 self.frontier.put(self.f(newState), newState)
 
+    ## calculates the f function
     def f(self, state):
         return state.g + self.h(state)
 
 
     def astar(self):
-        print("placeholder")
+        while True:
+            tup=self.frontier.get()
+            state = tup[0]
+            board = state.board
+            print(board)
+            if(self.h(board)==0):
+                break
+            if(board in self.closed):
+                continue
+            else:
+                self.closed.add(board)
+                self.next(state)
+
 
 if __name__ == '__main__':
     print("happy camper")
