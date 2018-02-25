@@ -13,10 +13,22 @@ class puzzle:
     closed = set()
 
     def _init_(self, board):
-        self.intial = frontier.
+        ##self.intial = frontier.
 
-    def h(self):
-        return self.intial
+    #heuristic function counts number of w have to move overband adds them together
+    def h(self, current):
+        result = 0
+        count = 0
+        for i in current.board:
+            if i == 'b':
+                count += 1
+            if i == 'w':
+                result += count
+        return result
+
+    ## calculates next set of moves and adds them to frontier
+    def next(self, current):
+        print(self.closed)
 
     def f(self):
         print("place")
