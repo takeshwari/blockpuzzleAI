@@ -5,17 +5,17 @@ SIZE = 7
 class state:
     g=0
     board = []
-    def _init_(self, board, g):
+    def __init__(self, board, g):
         self.g = g
         self.board = board
 
-class puzzle:
+class puzzle():
     frontier= PriorityQueue()
     closed = set()
 
-    def _init_(self, board):
+    def __init__(self, board):
         intial = state(board, 0)
-        self.frontier.put(self.f(intial), intial)
+        self.frontier.put((self.f(intial), intial))
 
     #heuristic function counts number of w have to move overband adds them together
     def h(self, current):
@@ -30,7 +30,7 @@ class puzzle:
 
     ## calculates next set of moves and adds them to frontier
     def next(self, current):
-        board, g= current.element, current.g
+        board, g= current.board, current.g
         space = board.index(" ")
         cost = 1
 
@@ -41,31 +41,32 @@ class puzzle:
             if(space -i > -1):
                 new[space-i], new[i] =  new[i], new[space-i]
                 newState = state(new,g + cost )
-                self.frontier.put(self.f(newState), newState)
+                self.frontier.put((self.f(newState), newState))
+                
             elif (space + i < SIZE ):
                 new[space + i], new[i] = new[i], new[space + i]
                 newState = state(new, g + cost)
-                self.frontier.put(self.f(newState), newState)
+                self.frontier.put((self.f(newState), newState))
 
     ## calculates the f function
     def f(self, state):
         return state.g + self.h(state)
 
-
     def astar(self):
         while True:
-            tup=self.frontier.get()
-            state = tup[0]
+            tup = self.frontier.get()
+            state = tup[1]
             board = state.board
             print(board)
-            if(self.h(board)==0):
+            if (self.h(state) == 0):
                 break
-            if(board in self.closed):
+            if (tuple(board) in self.closed):
                 continue
             else:
-                self.closed.add(board)
+                self.closed.add(tuple(board))
                 self.next(state)
 
 
 if __name__ == '__main__':
-    print("happy camper")
+    tiles = puzzle(['b', 'b', 'w', 'b', ' ', 'w', 'w'])
+    tiles.astar()

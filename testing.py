@@ -1,6 +1,22 @@
 # heuristic function counts number of w have to move overband adds them together
 import unittest
 
+
+def astar(self):
+    while True:
+        tup = self.frontier.get()
+        state = tup[0]
+        board = state.board
+        print(board)
+        if (self.h(board) == 0):
+            break
+        if (board in self.closed):
+            continue
+        else:
+            self.closed.add(board)
+            self.next(state)
+
+
 def h(current):
     result = 0
     count = 0
