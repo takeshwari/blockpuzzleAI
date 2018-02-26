@@ -2,6 +2,24 @@
 import unittest
 
 
+def next(self, current):
+    board, g = current.board, current.g
+    space = board.index(' ')
+    cost = 1
+    new = board
+    for i in range(1, 4):
+        new = board
+        if i == 3:
+            cost = 2
+        if (space - i > -1):
+            new[space - i], new[i] = new[i], new[space - i]
+            newState = state(new, g + cost)
+            ans = self.f(newState)
+            self.frontier.put((ans, newState))
+
+        elif (space + i < 7):
+            new[space + i], new[i] = new[i], new[space + i]
+
 def astar(self):
     while True:
         tup = self.frontier.get()
