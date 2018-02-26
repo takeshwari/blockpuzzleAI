@@ -1,4 +1,6 @@
-from queue import PriorityQueue
+import queue as Q
+
+from babel._compat import cmp
 
 SIZE = 7
 ## state contains board state and the state's g value
@@ -9,8 +11,21 @@ class state:
         self.g = g
         self.board = board
 
+    ##for comparing state objects in priority queue
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.g == other.g
+        return NotImplemented
+
+    ##for comparing state objects in priority queue
+    def __lt__(self, other):
+        if isinstance(other, self.__class__):
+            return self.g < other.g
+        return NotImplemented
+
+
 class puzzle():
-    frontier= PriorityQueue()
+    frontier= Q.PriorityQueue()
     closed = set()
 
     def __init__(self, board):
@@ -33,7 +48,7 @@ class puzzle():
         board, g= current.board, current.g
         space = board.index(" ")
         cost = 1
-
+        print(self.frontier)
         for i in range(1, 4):
             new = board
             if i == 3:
@@ -41,9 +56,10 @@ class puzzle():
             if(space -i > -1):
                 new[space-i], new[i] =  new[i], new[space-i]
                 newState = state(new,g + cost )
-                self.frontier.put((self.f(newState), newState))
-                
-            elif (space + i < SIZE ):
+                ans= self.f(newState)
+                self.frontier.put((ans, newState))
+
+            elif (space + i < SIZE):
                 new[space + i], new[i] = new[i], new[space + i]
                 newState = state(new, g + cost)
                 self.frontier.put((self.f(newState), newState))
@@ -58,14 +74,17 @@ class puzzle():
             state = tup[1]
             board = state.board
             print(board)
+            self.next(state)
             if (self.h(state) == 0):
                 break
-            if (tuple(board) in self.closed):
+            elif (tuple(board) in self.closed):
+                print(self.closed)
                 continue
             else:
                 self.closed.add(tuple(board))
                 self.next(state)
 
+    print("do we break out?")
 
 if __name__ == '__main__':
     tiles = puzzle(['b', 'b', 'w', 'b', ' ', 'w', 'w'])
