@@ -11,15 +11,16 @@ def next( current):
     new = []
     for i in range(1, 4):
         new = current[:]
-        print(current)
         if ((space - i) > -1):
             new[space - i], new[space] = new[space], new[space - i]
-
-        elif ((space + i )< 7):
+            print("space - i : ", new)
+        if ((space + i )< 7):
             new[space + i], new[space] = new[space], new[space + i]
-        print(new)
+            print("space +i : ", new)
+        else:
+            continue
 
 
 if __name__ == '__main__':
-    next(['w', 'w', 'w', 'b', 'b', 'b' ,' '])
+    next(['w', 'w', 'w', ' ', 'b', 'b' ,'b'])
    ## next([ ' ','w', 'w', 'w', 'b', 'b', 'b'])

@@ -51,7 +51,7 @@ class puzzleTestCase(unittest.TestCase):
     def test_is_hsolved_zero(self):
         """Is solved state considered to be zero by heuristic function"""
         self.assertEqual(h(['w', 'w', 'w', 'b', 'b', 'b', '']), 0, msg='wwwbbb_ fails')
-        self.assertEqual(h(['b', 'b', 'b', '', 'w', 'w','w']), 9, msg='bbb_www fails')
+        self.assertEqual(h(['b', 'b', 'b', 'w', 'w', 'w',' ']), 0, msg='bbb_www fails')
         self.assertEqual(h(['b', 'b', 'w', 'b', '', 'w', 'w']), 8, msg='bbwb_ww fails')
 
 if __name__ == '__main__':

@@ -1,5 +1,5 @@
 import queue as Q
-
+from time import sleep
 from babel._compat import cmp
 
 SIZE = 7
@@ -59,7 +59,7 @@ class puzzle():
                 ans= self.f(newState)
                 self.frontier.put((ans, newState))
 
-            elif (space + i < SIZE):
+            if (space + i < SIZE):
                 new[space + i], new[space] = new[space], new[space + i]
                 newState = state(new, g + cost)
                 self.frontier.put((self.f(newState), newState))
@@ -71,19 +71,27 @@ class puzzle():
     ##str of the show, does the calculations
     def astar(self):
         while True:
+            print(self.closed)
             tup = self.frontier.get()
             state = tup[1]
             board = state.board
-            print(board)
-            self.next(state)
             if (self.h(state) == 0):
+                print("board: ", board, "cost: ", state.g)
                 break
-            if (tuple(board) in self.closed):
+            elif (str(board) in self.closed):
+                print("closed ", end="")
+                print("board: ", board, "cost: ", state.g)
                 continue
             else:
-                self.closed.add(tuple(board))
+                self.closed.add(str(board))
                 self.next(state)
+                print("board: ", board, "cost: ", state.g)
+                
+            self.next(state)
+            sleep(1.5)
+###needs to be optimized
+###https://gamedevelopment.tutsplus.com/tutorials/how-to-speed-up-a-pathfinding-with-the-jump-point-search-algorithm--gamedev-5818
 
 if __name__ == '__main__':
-    tiles = puzzle(['w', 'w', 'b', 'w', ' ', 'b', 'b'])
+    tiles = puzzle(['b', 'b', 'b', ' ', 'w', 'w', 'w'])
     tiles.astar()

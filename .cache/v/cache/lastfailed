@@ -1,1 +1,3 @@
-{}
+{
+  "testing.py::puzzleTestCase::test_is_hsolved_zero": true
+}
