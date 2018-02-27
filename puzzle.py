@@ -71,7 +71,6 @@ class puzzle():
     ##str of the show, does the calculations
     def astar(self):
         while True:
-            print(self.closed)
             tup = self.frontier.get()
             state = tup[1]
             board = state.board
@@ -86,7 +85,7 @@ class puzzle():
                 self.closed.add(str(board))
                 self.next(state)
                 print("board: ", board, "cost: ", state.g)
-                
+
             self.next(state)
             sleep(1.5)
 ###needs to be optimized
