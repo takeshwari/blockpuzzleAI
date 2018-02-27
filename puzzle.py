@@ -89,7 +89,6 @@ class puzzle():
             self.next(state)
             sleep(1.5)
 ###needs to be optimized
-###https://gamedevelopment.tutsplus.com/tutorials/how-to-speed-up-a-pathfinding-with-the-jump-point-search-algorithm--gamedev-5818
 
 if __name__ == '__main__':
     tiles = puzzle(['b', 'b', 'b', ' ', 'w', 'w', 'w'])
